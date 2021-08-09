@@ -1,45 +1,32 @@
 package com.example.api_reader_app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.api_reader_app.databinding.FragmentListBinding
+import kotlin.math.roundToInt
 
-/**
- * A simple [Fragment] subclass.
- */
 class ListFragment : Fragment() {
 
-    private lateinit var binding: FragmentListBinding
+    private lateinit var viewModel: ListViewModel
 
-    private var list = arrayOf(
-        "First",
-        "Second",
-        "Third",
-        "Fourth",
-        "Fifth",
-        "Sixth",
-        "Seventh",
-        "Eighth",
-        "Ninth",
-        "Tenth",
-        "Eleventh",
-        "Twelfth",
-        "Thirteenth",
-        "Fourteenth",
-        "Fifteenth"
-    )
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        Log.i("ListFragment", "onCreateView called")
+
+        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -48,24 +35,38 @@ class ListFragment : Fragment() {
             false
         )
 
+        binding.listViewModel = viewModel
         binding.lifecycleOwner = this
 
         val adapter = context?.let { ArrayAdapter(
             it,
             android.R.layout.simple_list_item_1,
-            list
+            viewModel.next14Days
         )}
 
-        binding.listView.adapter = adapter
+        binding.nextTwoWeeks.adapter = adapter
 
-        binding.listView.setOnItemClickListener { _, _, _, id ->
-            //Toast.makeText(context, "Item nr $id", Toast.LENGTH_SHORT).show()
-            val action = ListFragmentDirections.actionListFragmentToDetailsFragment()
+        binding.nextTwoWeeks.setOnItemClickListener { _, _, _, id ->
+            Log.i("ListFragment", "Item nr $id clicked")
+
+            val dayTemperature = viewModel.forecast.list[id.toInt()].temp.day.roundToInt()
+            val nightTemperature = viewModel.forecast.list[id.toInt()].temp.night.roundToInt()
+
+            val action = ListFragmentDirections.actionListFragmentToDetailsFragment(
+                "$dayTemperature°",
+                "$nightTemperature°"
+            )
+
             findNavController().navigate(action)
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            Log.i("ListFragment", "onRefresh called")
+            viewModel.callAPI()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         return binding.root
     }
-
 
 }

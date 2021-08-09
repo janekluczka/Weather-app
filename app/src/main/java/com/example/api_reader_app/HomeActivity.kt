@@ -2,6 +2,7 @@ package com.example.api_reader_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.example.api_reader_app.databinding.ActivityHomeBinding
 
@@ -11,6 +12,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.i("HomeActivity", "onCreate called")
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
     }

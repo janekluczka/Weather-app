@@ -10,12 +10,26 @@
         android:name="com.example.api_reader_app.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
+
         <action
             android:id="@+id/action_listFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.api_reader_app.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+
+        <argument
+            android:name="day"
+            app:argType="string" />
+
+        <argument
+            android:name="night"
+            app:argType="string" />
+
+    </fragment>
+
 </navigation>
