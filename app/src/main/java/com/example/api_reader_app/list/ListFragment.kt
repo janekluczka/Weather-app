@@ -1,4 +1,4 @@
-package com.example.api_reader_app
+package com.example.api_reader_app.list
 
 import android.os.Bundle
 import android.util.Log
@@ -10,30 +10,35 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.api_reader_app.R
+import com.example.api_reader_app.database.ForecastDatabase
 import com.example.api_reader_app.databinding.FragmentListBinding
 import kotlin.math.roundToInt
 
 class ListFragment : Fragment() {
 
-    private lateinit var viewModel: ListViewModel
-
-    private lateinit var binding: FragmentListBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        savedInstanceState: Bundle?) : View {
 
         Log.i("ListFragment", "onCreateView called")
 
-        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
-
-        binding = DataBindingUtil.inflate(
+        val binding: FragmentListBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_list,
             container,
             false
         )
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = ForecastDatabase.getInstance(application).forecastDatabaseDao
+
+        val viewModelFactory = ListViewModelFactory(dataSource, application)
+
+        val viewModel = ViewModelProvider(
+            this,
+            viewModelFactory).get(ListViewModel::class.java)
 
         binding.listViewModel = viewModel
         binding.lifecycleOwner = this
@@ -52,10 +57,11 @@ class ListFragment : Fragment() {
             val dayTemperature = viewModel.forecast.list[id.toInt()].temp.day.roundToInt()
             val nightTemperature = viewModel.forecast.list[id.toInt()].temp.night.roundToInt()
 
-            val action = ListFragmentDirections.actionListFragmentToDetailsFragment(
-                "$dayTemperature°",
-                "$nightTemperature°"
-            )
+            val action =
+                ListFragmentDirections.actionListFragmentToDetailsFragment(
+                    "$dayTemperature°",
+                    "$nightTemperature°"
+                )
 
             findNavController().navigate(action)
         }
