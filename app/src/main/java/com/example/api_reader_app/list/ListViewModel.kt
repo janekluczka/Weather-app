@@ -5,8 +5,8 @@ import android.app.Application
 import android.icu.text.SimpleDateFormat
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import com.example.api_reader_app.database.DailyForecast
 import com.example.api_reader_app.database.ForecastDatabaseDao
-import com.example.api_reader_app.database.ForecastDay
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
 import okhttp3.*
@@ -16,109 +16,113 @@ import java.util.*
 @SuppressLint("SimpleDateFormat")
 class ListViewModel(
     val database: ForecastDatabaseDao,
-    application: Application) : AndroidViewModel(application) {
+    application: Application
+) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
 
-//    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val uiScope = CoroutineScope(viewModelJob)
 
     private val client = OkHttpClient()
 
-    var next14Days = mutableListOf<String>()
+    var twoWeeksList = mutableListOf<String>()
 
     lateinit var forecast: Forecast
 
     init {
-        Log.i("ListViewModel", "ListViewModel created")
+        Log.i("ListViewModel", "ListViewModel created\non ${Thread.currentThread().name}")
 
         val date = Calendar.getInstance()
         val formatter = SimpleDateFormat("dd.MM.yyyy  EEEE")
 
         for (i in 1..14) {
-            next14Days.add(formatter.format(date.time))
+            twoWeeksList.add(formatter.format(date.time))
             date.add(Calendar.DATE, 1)
         }
 
-        callAPI()
-//        addForecastToDatabase()
+        getData()
     }
 
-//    private suspend fun insert(day: ForecastDay) {
-//        withContext(Dispatchers.IO) {
+    private suspend fun insert(day: DailyForecast) {
+        withContext(Dispatchers.IO) {
+            Log.i("ListViewModel", "Inserting DailyForecast to Database")
 //            database.insert(day)
-//        }
-//    }
-//
-//    private suspend fun update(day: ForecastDay) {
-//        withContext(Dispatchers.IO) {
-//            database.update(day)
-//        }
-//    }
-//
-//    override fun onCleared() {
-//        super.onCleared()
-//        viewModelJob.cancel()
-//    }
-//
-//    fun onClear() {
-//        uiScope.launch {
-//            clear()
-//        }
-//    }
-//
-//    suspend fun clear() {
-//        withContext(Dispatchers.IO) {
-//            database.clear()
-//        }
-//    }
+        }
+    }
 
+    private suspend fun update(day: DailyForecast) {
+        withContext(Dispatchers.IO) {
+            database.update(day)
+        }
+    }
 
-    fun callAPI() {
-        Log.i("ListViewModel", "callAPI called")
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
-        val request = Request.Builder()
-            .url("https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=wroclaw%2Cpl&lat=35&lon=139&cnt=14&units=metric")
-            .get()
-            .addHeader("x-rapidapi-key", "4707b6485bmsh025db3a12baefbfp1e9fdfjsn53ad0ce245b4")
-            .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-            .build()
+    fun onClear() {
+        uiScope.launch {
+            clear()
+        }
+    }
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                // response body
+    suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            database.clear()
+        }
+    }
+
+    fun getData() {
+        uiScope.launch {
+            callAPI()
+            addForecastToDatabase()
+        }
+    }
+
+    suspend fun callAPI() {
+        withContext(Dispatchers.IO) {
+            Log.i("ListViewModel", "callAPI called\non ${Thread.currentThread().name}")
+
+            val request = Request.Builder()
+                .url("https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=wroclaw%2Cpl&lat=35&lon=139&cnt=14&units=metric")
+                .get()
+                .addHeader("x-rapidapi-key", "4707b6485bmsh025db3a12baefbfp1e9fdfjsn53ad0ce245b4")
+                .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                Log.i("ListViewModel", "newCall called\non ${Thread.currentThread().name}")
+
                 val body = response.body()?.string()
                 // gson builder
                 val gson = GsonBuilder().create()
                 // get forecast from response
+                Log.i("ListViewModel", "got forecast")
                 forecast = gson.fromJson(body, Forecast::class.java)
             }
-
-            override fun onFailure(call: Call, e: IOException) {
-                //Toast.makeText()
-            }
-        })
+        }
     }
 
-//    fun addForecastToDatabase() {
-//        Log.i("ListVIewModel", "addForecastToDatabase called")
-//
-//        uiScope.launch {
-//            Log.i("ListVIewModel", "Looping through days")
-//            // loop through all days and add them to database
-//            for (i in (0..13)) {
-//                Log.i("ListVIewModel", "Creating new forecast day")
-//                // create new forecast for a day to add
-//                val newDay = ForecastDay(
-//                    0L,
-//                    forecast.list[i].temp.day.toInt(),
-//                    forecast.list[i].temp.night.toInt()
-//                )
-//                Log.i("ListVIewModel", "Adding to database")
-//                // add forecast to database
-//                insert(newDay)
-//            }
-//        }
-//    }
+    fun addForecastToDatabase() {
+        Log.i("ListViewModel", "addForecastToDatabase called\n" +
+                "on ${Thread.currentThread().name}")
+
+        // loop through all days and add them to database
+        for (i in (0..13)) {
+            Log.i("ListViewModel", "Creating and inserting new forecast day $i")
+            // create new forecast for a day to add
+                val newDay = DailyForecast(
+                    i.toLong(),
+                    forecast.list[i].temp.day.toInt(),
+                    forecast.list[i].temp.night.toInt()
+                )
+            // add forecast to database
+            // database.insert(newDay)
+        }
+    }
 }
 
 class Forecast(val list: List<Day>)

@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "day_forecast_table")
-data class ForecastDay (
+@Entity(tableName = "daily_forecast_table")
+data class DailyForecast (
     @ColumnInfo(name = "date")
     var date: Long = 0L,
 
@@ -15,6 +15,7 @@ data class ForecastDay (
     @ColumnInfo(name = "night_temperature")
     val nightTemperature: Int = -273
 ) {
+
     @PrimaryKey(autoGenerate = true)
     var dayID: Long = 0L
 }

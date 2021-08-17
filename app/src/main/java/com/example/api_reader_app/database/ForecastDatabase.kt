@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ForecastDay::class], version = 1, exportSchema = false)
+@Database(entities = [DailyForecast::class], version = 1, exportSchema = false)
 abstract class ForecastDatabase : RoomDatabase() {
 
     abstract val forecastDatabaseDao: ForecastDatabaseDao
@@ -32,5 +32,4 @@ abstract class ForecastDatabase : RoomDatabase() {
             }
         }
     }
-
 }

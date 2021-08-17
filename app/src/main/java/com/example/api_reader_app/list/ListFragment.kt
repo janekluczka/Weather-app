@@ -19,7 +19,8 @@ class ListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?) : View {
+        savedInstanceState: Bundle?
+    ) : View {
 
         Log.i("ListFragment", "onCreateView called")
 
@@ -38,7 +39,8 @@ class ListFragment : Fragment() {
 
         val viewModel = ViewModelProvider(
             this,
-            viewModelFactory).get(ListViewModel::class.java)
+            viewModelFactory
+        ).get(ListViewModel::class.java)
 
         binding.listViewModel = viewModel
         binding.lifecycleOwner = this
@@ -46,21 +48,22 @@ class ListFragment : Fragment() {
         val adapter = context?.let { ArrayAdapter(
             it,
             android.R.layout.simple_list_item_1,
-            viewModel.next14Days
+            viewModel.twoWeeksList
         )}
 
-        binding.nextTwoWeeks.adapter = adapter
+        binding.fragmentListLvDaysList.adapter = adapter
 
-        binding.nextTwoWeeks.setOnItemClickListener { _, _, _, id ->
+        binding.fragmentListLvDaysList.setOnItemClickListener { _, _, _, id ->
             Log.i("ListFragment", "Item nr $id clicked")
 
-            val dayTemperature = viewModel.forecast.list[id.toInt()].temp.day.roundToInt()
-            val nightTemperature = viewModel.forecast.list[id.toInt()].temp.night.roundToInt()
+//            val dayTemperature = viewModel.forecast.list[id.toInt()].temp.day.roundToInt()
+//            val nightTemperature = viewModel.forecast.list[id.toInt()].temp.night.roundToInt()
 
             val action =
                 ListFragmentDirections.actionListFragmentToDetailsFragment(
-                    "$dayTemperature°",
-                    "$nightTemperature°"
+//                    "$dayTemperature°",
+//                    "$nightTemperature°"
+                "",""
                 )
 
             findNavController().navigate(action)
@@ -68,11 +71,15 @@ class ListFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             Log.i("ListFragment", "onRefresh called")
-            viewModel.callAPI()
+            viewModel.getData()
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
 }

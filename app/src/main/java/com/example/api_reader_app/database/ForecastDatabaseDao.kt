@@ -8,14 +8,17 @@ import androidx.room.Update
 @Dao
 interface ForecastDatabaseDao {
     @Insert
-    fun insert(day: ForecastDay)
+    fun insert(day: DailyForecast)
 
     @Update
-    fun update(day: ForecastDay)
+    fun update(day: DailyForecast)
 
-    @Query("SELECT * from day_forecast_table WHERE dayID = :key")
-    fun get(key: Int): ForecastDay?
+    @Query("SELECT * from daily_forecast_table WHERE dayID = :key")
+    fun getByID(key: Long): DailyForecast?
 
-    @Query("DELETE FROM day_forecast_table")
+    @Query("SELECT * from daily_forecast_table WHERE date = :key")
+    fun getByDay(key: Long): DailyForecast?
+
+    @Query("DELETE FROM daily_forecast_table")
     fun clear()
 }

@@ -11,7 +11,7 @@
         tools:context=".HomeActivity">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/navHostFragment"
+            android:id="@+id/activity_home_nhf_"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

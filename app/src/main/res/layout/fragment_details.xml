@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -8,20 +9,20 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/dayTemperature"
+            android:id="@+id/fragment_details_txt_day_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/unk"
             android:textColor="@color/black"
             android:textSize="60sp"
-            app:layout_constraintBottom_toTopOf="@+id/nightTemperature"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_details_txt_night_temp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nightTemperature"
+            android:id="@+id/fragment_details_txt_night_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
@@ -31,10 +32,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dayTemperature" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_details_txt_day_temp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/fragment_details_txt_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -44,10 +45,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dayTemperature" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_details_txt_day_temp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/fragment_details_txt_night"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -57,6 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nightTemperature" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_details_txt_night_temp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

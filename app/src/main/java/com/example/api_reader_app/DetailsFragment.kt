@@ -31,8 +31,8 @@ class DetailsFragment : Fragment() {
             false
         )
 
-        binding.dayTemperature.text = args.day
-        binding.nightTemperature.text = args.night
+        binding.fragmentDetailsTxtDayTemp.text = args.day
+        binding.fragmentDetailsTxtNightTemp.text = args.night
 
         return binding.root
     }
