@@ -16,12 +16,12 @@
         android:theme="@style/Theme.API_reader_app">
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="true"
             android:label="Weather forecast for Wroclaw"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
 
             <intent-filter>

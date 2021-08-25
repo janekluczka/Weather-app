@@ -1,4 +1,4 @@
-package com.example.api_reader_app.list
+package com.example.api_reader_app.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

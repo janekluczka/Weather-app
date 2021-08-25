@@ -1,4 +1,4 @@
-package com.example.api_reader_app.list
+package com.example.api_reader_app.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,12 +13,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.api_reader_app.R
 import com.example.api_reader_app.database.ForecastDatabase
 import com.example.api_reader_app.databinding.FragmentListBinding
-import kotlin.math.roundToInt
+import com.example.api_reader_app.viewmodels.ListViewModel
+import com.example.api_reader_app.viewmodels.ListViewModelFactory
 
 class ListFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View {
 
@@ -56,15 +58,8 @@ class ListFragment : Fragment() {
         binding.fragmentListLvDaysList.setOnItemClickListener { _, _, _, id ->
             Log.i("ListFragment", "Item nr $id clicked")
 
-//            val dayTemperature = viewModel.forecast.list[id.toInt()].temp.day.roundToInt()
-//            val nightTemperature = viewModel.forecast.list[id.toInt()].temp.night.roundToInt()
-
             val action =
-                ListFragmentDirections.actionListFragmentToDetailsFragment(
-//                    "$dayTemperature°",
-//                    "$nightTemperature°"
-                "",""
-                )
+                ListFragmentDirections.actionListFragmentToDetailsFragment(id.toInt())
 
             findNavController().navigate(action)
         }
