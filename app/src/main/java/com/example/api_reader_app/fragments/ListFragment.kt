@@ -58,9 +58,7 @@ class ListFragment : Fragment() {
         binding.fragmentListLvDaysList.setOnItemClickListener { _, _, _, id ->
             Log.i("ListFragment", "Item nr $id clicked")
 
-            val action =
-                ListFragmentDirections.actionListFragmentToDetailsFragment(id.toInt())
-
+            val action = ListFragmentDirections.actionListFragmentToDetailsFragment(id.toInt())
             findNavController().navigate(action)
         }
 
@@ -73,8 +71,4 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
 }

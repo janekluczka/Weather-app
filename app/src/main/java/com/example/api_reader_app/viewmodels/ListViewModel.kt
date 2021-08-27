@@ -7,10 +7,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.api_reader_app.database.DailyForecast
 import com.example.api_reader_app.database.ForecastDatabaseDao
-import com.google.gson.GsonBuilder
+import com.example.api_reader_app.network.Forecast
+import com.example.api_reader_app.network.OpenWeatherMapAPI
 import kotlinx.coroutines.*
-import okhttp3.*
-import java.io.IOException
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
@@ -22,8 +21,6 @@ class ListViewModel(
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(viewModelJob)
-
-    private val client = OkHttpClient()
 
     var twoWeeksList = mutableListOf<String>()
 
@@ -59,31 +56,16 @@ class ListViewModel(
         }
     }
 
-    private suspend fun callAPI() {
-        withContext(Dispatchers.IO) {
-            Log.i("ListViewModel", "callAPI called")
-
-            val request = Request.Builder()
-                .url("https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=wroclaw%2Cpl&cnt=14&units=metric")
-                .get()
-                .addHeader("x-rapidapi-key", "4707b6485bmsh025db3a12baefbfp1e9fdfjsn53ad0ce245b4")
-                .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .build()
-
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                Log.i("ListViewModel", "newCall called")
-
-                val body = response.body()?.string()
-                // gson builder
-                val gson = GsonBuilder().create()
-                // get forecast from response
-                Log.i("ListViewModel", "got forecast")
-                forecast = gson.fromJson(body, Forecast::class.java)
-            }
-        }
+    private fun callAPI() {
+        Log.i("ListViewModel", "callAPI called")
+        val call = OpenWeatherMapAPI.retrofitService.getForecast()
+        forecast = call.execute().body()!!
     }
+
+//    private fun callAPI() {
+//        client.newCall(request).execute().use { response ->
+//            if (!response.isSuccessful) throw IOException("Unexpected code $response") }
+//    }
 
     private fun addForecastToDatabase() {
         Log.i("ListViewModel", "addForecastToDatabase called")
@@ -102,9 +84,3 @@ class ListViewModel(
         }
     }
 }
-
-class Forecast(val list: List<Day>)
-
-class Day(val temp: Temperature)
-
-class Temperature(val day: Float, val night: Float)

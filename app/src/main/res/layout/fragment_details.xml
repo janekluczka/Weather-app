@@ -16,10 +16,11 @@
 
         <TextView
             android:id="@+id/fragment_details_txt_day_temp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/unk"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="60sp"
             app:layout_constraintBottom_toTopOf="@+id/fragment_details_txt_night_temp"
@@ -29,10 +30,11 @@
 
         <TextView
             android:id="@+id/fragment_details_txt_night_temp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="@string/unk"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="60sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,10 +44,11 @@
 
         <TextView
             android:id="@+id/fragment_details_txt_day"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/day"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +58,11 @@
 
         <TextView
             android:id="@+id/fragment_details_txt_night"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/night"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

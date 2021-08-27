@@ -1,6 +1,5 @@
 package com.example.api_reader_app.network
 
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,13 +20,11 @@ interface OpenWeatherMapAPIService {
     )
     @GET("forecast/daily?q=wroclaw%2Cpl&cnt=14&units=metric")
     fun getForecast():
-            Call<String>
+            Call<Forecast>
 }
 
 object OpenWeatherMapAPI {
-    val retrofitService : OpenWeatherMapAPIService by lazy {
+    val retrofitService: OpenWeatherMapAPIService =
         retrofit.create(OpenWeatherMapAPIService::class.java)
-    }
-
-    private val client = OkHttpClient()
 }
+

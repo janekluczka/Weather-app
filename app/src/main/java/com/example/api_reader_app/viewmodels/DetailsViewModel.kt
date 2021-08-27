@@ -29,8 +29,6 @@ class DetailsViewModel(
 
     init {
         Log.i("DetailsViewModel", "DetailsViewModel created")
-        _dayTemperature.value = ""
-        _nightTemperature.value = ""
         getDayForecast()
     }
 
@@ -51,8 +49,8 @@ class DetailsViewModel(
 
     fun setNewTemperatures() {
         Log.i("DetailsViewModel", "setNewTemperatures called")
-        _dayTemperature.value = forecast.value?.dayTemperature.toString()
-        _nightTemperature.value = forecast.value?.nightTemperature.toString()
+        _dayTemperature.value = forecast.value?.dayTemperature.toString() + "°"
+        _nightTemperature.value = forecast.value?.nightTemperature.toString() + "°"
     }
 
 }
