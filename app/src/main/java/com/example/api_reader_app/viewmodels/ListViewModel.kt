@@ -22,22 +22,29 @@ class ListViewModel(
 
     private val uiScope = CoroutineScope(viewModelJob)
 
-    var twoWeeksList = mutableListOf<String>()
+    var daysList = mutableListOf<String>()
 
-    lateinit var forecast: Forecast
+    private lateinit var forecast: Forecast
+
+    var numberOfDays = 7
 
     init {
         Log.i("ListViewModel", "ListViewModel created")
+        updateDaysList()
+        getData()
+    }
 
+    fun updateDaysList() {
+        Log.i("ListViewModel", "updateDaysList called")
         val date = Calendar.getInstance()
         val formatter = SimpleDateFormat("dd.MM.yyyy  EEEE")
 
-        for (i in 1..14) {
-            twoWeeksList.add(formatter.format(date.time))
+        daysList.clear()
+
+        for (i in 0..numberOfDays) {
+            daysList.add(formatter.format(date.time))
             date.add(Calendar.DATE, 1)
         }
-
-        getData()
     }
 
     override fun onCleared() {
@@ -46,6 +53,7 @@ class ListViewModel(
     }
 
     fun getData() {
+        Log.i("ListViewModel", "getData called")
         uiScope.launch {
             // clear database
             database.clear()
@@ -58,20 +66,15 @@ class ListViewModel(
 
     private fun callAPI() {
         Log.i("ListViewModel", "callAPI called")
-        val call = OpenWeatherMapAPI.retrofitService.getForecast()
+        val call = OpenWeatherMapAPI.retrofitService.get16DayForecastForWroclaw()
         forecast = call.execute().body()!!
     }
-
-//    private fun callAPI() {
-//        client.newCall(request).execute().use { response ->
-//            if (!response.isSuccessful) throw IOException("Unexpected code $response") }
-//    }
 
     private fun addForecastToDatabase() {
         Log.i("ListViewModel", "addForecastToDatabase called")
 
         // loop through all days and add them to database
-        for (i in (0..13)) {
+        for (i in (0..15)) {
             Log.i("ListViewModel", "Creating and inserting new forecast day $i")
             // create new forecast for a day to add
                 val newDay = DailyForecast(

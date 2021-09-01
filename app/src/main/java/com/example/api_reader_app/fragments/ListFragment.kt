@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.SeekBar
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -50,7 +52,7 @@ class ListFragment : Fragment() {
         val adapter = context?.let { ArrayAdapter(
             it,
             android.R.layout.simple_list_item_1,
-            viewModel.twoWeeksList
+            viewModel.daysList
         )}
 
         binding.fragmentListLvDaysList.adapter = adapter
@@ -67,6 +69,27 @@ class ListFragment : Fragment() {
             viewModel.getData()
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
+        binding.fragmentListSb.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    viewModel.numberOfDays = progress
+                    viewModel.updateDaysList()
+                    adapter?.notifyDataSetChanged()
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                }
+            })
 
         return binding.root
     }

@@ -1,11 +1,10 @@
-package com.example.api_reader_app.viewmodels;
+package com.example.api_reader_app.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.api_reader_app.database.ForecastDatabaseDao
 
-public class DetailsViewModelFactory (
+class DetailsViewModelFactory (
         private val dayID: Long,
         private val dataSource: ForecastDatabaseDao,
     ) : ViewModelProvider.Factory {

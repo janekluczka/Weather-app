@@ -9,7 +9,7 @@ import com.example.api_reader_app.database.ForecastDatabaseDao
 import kotlinx.coroutines.*
 
 class DetailsViewModel(
-    val dayID: Long,
+    private val dayID: Long,
     val database: ForecastDatabaseDao,
     ) : ViewModel() {
 

@@ -3,5 +3,5 @@
     <string name="welcome_message">Welcome</string>
     <string name="day">Day</string>
     <string name="night">Night</string>
-    <string name="unk">UNK.</string>
+    <string name="unk"></string>
 </resources>
