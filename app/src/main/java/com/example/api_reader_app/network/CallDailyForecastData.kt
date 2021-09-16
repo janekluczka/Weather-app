@@ -1,14 +1,14 @@
 package com.example.api_reader_app.network
 
-class Forecast(
+data class Forecast(
     val list: List<Day>
 )
 
-class Day(
+data class Day(
     val temp: Temperature
 )
 
-class Temperature(
+data class Temperature(
     val day: Float,
     val night: Float
 )

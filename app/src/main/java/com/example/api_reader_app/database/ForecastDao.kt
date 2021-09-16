@@ -6,7 +6,8 @@ import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-interface ForecastDatabaseDao {
+interface ForecastDao {
+
     @Insert
     fun insert(day: DailyForecast)
 
@@ -21,4 +22,5 @@ interface ForecastDatabaseDao {
 
     @Query("DELETE FROM daily_forecast_table")
     fun clear()
+
 }

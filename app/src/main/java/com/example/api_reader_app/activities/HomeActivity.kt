@@ -16,6 +16,9 @@ class HomeActivity : AppCompatActivity() {
 
         Log.i("HomeActivity", "onCreate called")
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_home
+        )
     }
 }

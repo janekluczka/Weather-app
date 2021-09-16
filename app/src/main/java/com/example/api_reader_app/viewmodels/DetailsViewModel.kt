@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.api_reader_app.database.DailyForecast
-import com.example.api_reader_app.database.ForecastDatabaseDao
+import com.example.api_reader_app.database.ForecastDao
 import kotlinx.coroutines.*
 
 class DetailsViewModel(
     private val dayID: Long,
-    val database: ForecastDatabaseDao,
-    ) : ViewModel() {
+    val database: ForecastDao,
+) : ViewModel() {
 
     private var viewModelJob = Job()
 

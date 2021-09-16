@@ -49,7 +49,6 @@ class DetailsFragment : Fragment() {
         ).get(DetailsViewModel::class.java)
 
         binding.detailsViewModel = viewModel
-        binding.lifecycleOwner = this
 
         viewModel.forecast.observe(viewLifecycleOwner, {
             viewModel.setNewTemperatures()

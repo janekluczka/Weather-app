@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,7 +23,7 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) : View {
+    ): View {
 
         Log.i("ListFragment", "onCreateView called")
 
@@ -47,13 +46,16 @@ class ListFragment : Fragment() {
         ).get(ListViewModel::class.java)
 
         binding.listViewModel = viewModel
+
         binding.lifecycleOwner = this
 
-        val adapter = context?.let { ArrayAdapter(
-            it,
-            android.R.layout.simple_list_item_1,
-            viewModel.daysList
-        )}
+        val adapter = context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_list_item_1,
+                viewModel.daysList
+            )
+        }
 
         binding.fragmentListLvDaysList.adapter = adapter
 
@@ -66,6 +68,7 @@ class ListFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             Log.i("ListFragment", "onRefresh called")
+
             viewModel.getData()
             binding.swipeRefreshLayout.isRefreshing = false
         }
@@ -77,18 +80,16 @@ class ListFragment : Fragment() {
                     progress: Int,
                     fromUser: Boolean
                 ) {
+                    Log.i("ListFragment", "onProgressChanged called")
+
                     viewModel.numberOfDays = progress
                     viewModel.updateDaysList()
                     adapter?.notifyDataSetChanged()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-                }
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             })
 
         return binding.root

@@ -2,12 +2,12 @@ package com.example.api_reader_app.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.api_reader_app.database.ForecastDatabaseDao
+import com.example.api_reader_app.database.ForecastDao
 
-class DetailsViewModelFactory (
-        private val dayID: Long,
-        private val dataSource: ForecastDatabaseDao,
-    ) : ViewModelProvider.Factory {
+class DetailsViewModelFactory(
+    private val dayID: Long,
+    private val dataSource: ForecastDao,
+) : ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -15,6 +15,6 @@ class DetailsViewModelFactory (
             return DetailsViewModel(dayID, dataSource) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
-        }
+    }
 
 }
