@@ -4,7 +4,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
-interface OpenWeatherMapAPIService {
+interface OpenWeatherApi {
 
     @Headers(
         "x-rapidapi-key: 4707b6485bmsh025db3a12baefbfp1e9fdfjsn53ad0ce245b4",

@@ -1,29 +1,21 @@
 package com.example.api_reader_app.viewmodels
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.icu.text.SimpleDateFormat
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import com.example.api_reader_app.database.ForecastDao
-import com.example.api_reader_app.repositories.ForecastRepository
+import androidx.lifecycle.ViewModel
+import com.example.api_reader_app.repositories.ForecastRepositoryImpl
 import kotlinx.coroutines.*
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 class ListViewModel(
-    val database: ForecastDao,
-    application: Application
-) : AndroidViewModel(application) {
+    private val repository: ForecastRepositoryImpl,
+) : ViewModel() {
 
     private var viewModelJob = Job()
-
     private val uiScope = CoroutineScope(viewModelJob)
-
-    private val repository = ForecastRepository(database)
-
     var daysList = mutableListOf<String>()
-
     var numberOfDays = 7
 
     init {
@@ -37,7 +29,7 @@ class ListViewModel(
         Log.i("ListViewModel", "updateDaysList called")
 
         val date = Calendar.getInstance()
-        val formatter = SimpleDateFormat("dd.MM.yyyy  EEEE")
+        val formatter = SimpleDateFormat("dd.MM.yyyy EEEE")
 
         daysList.clear()
         for (i in 0..numberOfDays) {

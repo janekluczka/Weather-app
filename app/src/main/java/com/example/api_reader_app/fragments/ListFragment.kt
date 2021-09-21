@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.api_reader_app.R
-import com.example.api_reader_app.database.ForecastDatabase
 import com.example.api_reader_app.databinding.FragmentListBinding
 import com.example.api_reader_app.viewmodels.ListViewModel
-import com.example.api_reader_app.viewmodels.ListViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {
 
@@ -24,7 +22,6 @@ class ListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         Log.i("ListFragment", "onCreateView called")
 
         val binding: FragmentListBinding = DataBindingUtil.inflate(
@@ -34,19 +31,9 @@ class ListFragment : Fragment() {
             false
         )
 
-        val application = requireNotNull(this.activity).application
-
-        val dataSource = ForecastDatabase.getInstance(application).forecastDatabaseDao
-
-        val viewModelFactory = ListViewModelFactory(dataSource, application)
-
-        val viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        ).get(ListViewModel::class.java)
+        val viewModel by viewModel<ListViewModel>()
 
         binding.listViewModel = viewModel
-
         binding.lifecycleOwner = this
 
         val adapter = context?.let {
@@ -90,7 +77,8 @@ class ListFragment : Fragment() {
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
+            }
+        )
 
         return binding.root
     }

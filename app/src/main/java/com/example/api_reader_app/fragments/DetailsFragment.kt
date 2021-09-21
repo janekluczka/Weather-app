@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.api_reader_app.R
-import com.example.api_reader_app.database.ForecastDatabase
 import com.example.api_reader_app.databinding.FragmentDetailsBinding
 import com.example.api_reader_app.viewmodels.DetailsViewModel
-import com.example.api_reader_app.viewmodels.DetailsViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import com.example.api_reader_app.fragments.DetailsFragmentArgs as DetailsFragmentArgs1
 
 class DetailsFragment : Fragment() {
@@ -27,7 +26,6 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         Log.i("DetailsFragment", "onCreateView called")
 
         binding = DataBindingUtil.inflate(
@@ -37,16 +35,7 @@ class DetailsFragment : Fragment() {
             false
         )
 
-        val application = requireNotNull(this.activity).application
-
-        val dataSource = ForecastDatabase.getInstance(application).forecastDatabaseDao
-
-        val viewModelFactory = DetailsViewModelFactory(args.id.toLong(), dataSource)
-
-        val viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        ).get(DetailsViewModel::class.java)
+        val viewModel: DetailsViewModel by viewModel{ parametersOf(args.id.toLong())}
 
         binding.detailsViewModel = viewModel
 

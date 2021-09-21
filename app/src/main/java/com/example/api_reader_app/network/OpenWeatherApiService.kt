@@ -10,10 +10,9 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-object OpenWeatherMapAPI {
+object OpenWeatherApiService {
 
-    val retrofitService: OpenWeatherMapAPIService =
-        retrofit.create(OpenWeatherMapAPIService::class.java)
+    val retrofitService: OpenWeatherApi = retrofit.create(OpenWeatherApi::class.java)
 
 }
 

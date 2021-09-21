@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
 )
 abstract class ForecastDatabase : RoomDatabase() {
 
-    abstract val forecastDatabaseDao: ForecastDao
+    abstract val forecastDao: ForecastDao
 
     companion object {
         @Volatile
