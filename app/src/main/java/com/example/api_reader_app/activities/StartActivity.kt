@@ -8,12 +8,12 @@ import android.os.Looper
 import android.util.Log
 import com.example.api_reader_app.R
 
-class MainActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.i("MainActivity", "onCreate called")
+        Log.i("StartActivity", "onCreate called")
 
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()

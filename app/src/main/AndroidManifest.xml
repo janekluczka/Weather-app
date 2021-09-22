@@ -20,7 +20,7 @@
             android:label="Weather forecast for Wroclaw" />
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.StartActivity"
             android:exported="true">
 
             <intent-filter>
