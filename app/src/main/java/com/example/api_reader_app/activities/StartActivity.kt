@@ -15,14 +15,14 @@ class StartActivity : AppCompatActivity() {
 
         Log.i("StartActivity", "onCreate called")
 
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_start)
         supportActionBar?.hide()
 
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 val intent = Intent(
                     this,
-                    HomeActivity::class.java
+                    MainActivity::class.java
                 )
                 startActivity(intent)
                 finish()
