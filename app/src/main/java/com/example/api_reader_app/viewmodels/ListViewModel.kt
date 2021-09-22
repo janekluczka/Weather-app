@@ -10,7 +10,7 @@ import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 class ListViewModel(
-    private val repository: ForecastRepositoryImpl,
+    private val repository: ForecastRepositoryImpl
 ) : ViewModel() {
 
     private var viewModelJob = Job()
