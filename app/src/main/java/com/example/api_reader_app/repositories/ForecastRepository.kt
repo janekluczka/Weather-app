@@ -4,7 +4,7 @@ import com.example.api_reader_app.database.DailyForecast
 
 interface ForecastRepository {
 
-    fun getAndSaveDailyForecast()
+    suspend fun getAndSaveDailyForecast()
     fun getForecastByDay(key: Long): DailyForecast?
     fun getForecastByID(key: Long): DailyForecast?
 

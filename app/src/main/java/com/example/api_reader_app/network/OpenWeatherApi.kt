@@ -11,6 +11,8 @@ interface OpenWeatherApi {
         "x-rapidapi-host: community-open-weather-map.p.rapidapi.com"
     )
     @GET("forecast/daily?q=wroclaw%2Cpl&cnt=16&units=metric")
-    fun get16DayForecastForWroclaw(): Call<Forecast>
+    suspend fun get16DayForecastForWroclaw(): Forecast
+    //    fun get16DayForecastForWroclaw(): Call<Forecast>
+
 
 }

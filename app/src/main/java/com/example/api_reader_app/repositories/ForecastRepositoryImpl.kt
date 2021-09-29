@@ -10,11 +10,11 @@ class ForecastRepositoryImpl(
     private val database: ForecastDao
 ) : ForecastRepository {
 
-    override fun getAndSaveDailyForecast() {
+    override suspend fun getAndSaveDailyForecast() {
         Log.i("ForecastRepositoryImpl", "getAndSaveDailyForecast called")
 
         val forecast = getForecastFromOpenWeatherApi()
-        if (forecast != null) saveForecastToDatabase(forecast)
+        saveForecastToDatabase(forecast)
     }
 
     override fun getForecastByDay(key: Long): DailyForecast? {
@@ -29,19 +29,10 @@ class ForecastRepositoryImpl(
         return database.getByID(key)
     }
 
-    private fun getForecastFromOpenWeatherApi(): Forecast? {
+    private suspend fun getForecastFromOpenWeatherApi(): Forecast {
         Log.i("ForecastRepositoryImpl", "getForecastFromOpenWeatherApi called")
 
-        val call = OpenWeatherApiService.retrofitService.get16DayForecastForWroclaw()
-        val execute = call.execute()
-
-        return if (execute.isSuccessful) {
-            Log.i("ForecastRepositoryImpl", "getForecastFromOpenWeatherApi successful")
-            execute.body()!!
-        } else {
-            Log.i("ForecastRepositoryImpl", "getForecastFromOpenWeatherApi failed")
-            null
-        }
+        return OpenWeatherApiService.retrofitService.get16DayForecastForWroclaw()
     }
 
     private fun saveForecastToDatabase(forecast: Forecast) {

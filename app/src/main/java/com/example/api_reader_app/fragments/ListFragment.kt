@@ -49,7 +49,7 @@ class ListFragment : Fragment() {
         binding.fragmentListLvDaysList.setOnItemClickListener { _, _, _, id ->
             Log.i("ListFragment", "Item nr $id clicked")
 
-            val action = ListFragmentDirections.actionListFragmentToDetailsFragment(id.toInt())
+            val action = ListFragmentDirections.actionListFragmentToViewPagerFragment(id.toInt())
             findNavController().navigate(action)
         }
 

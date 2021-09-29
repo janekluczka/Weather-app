@@ -14,19 +14,17 @@
         tools:layout="@layout/fragment_list" >
 
         <action
-            android:id="@+id/action_listFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/action_listFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.example.api_reader_app.fragments.DetailsFragment"
-        android:label="DetailsFragment" >
-
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.api_reader_app.fragments.ViewPagerFragment"
+        android:label="ViewPagerFragment" >
         <argument
             android:name="id"
             app:argType="integer" />
-
     </fragment>
 </navigation>

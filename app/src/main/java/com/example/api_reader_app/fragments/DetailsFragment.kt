@@ -7,19 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.navArgs
 import com.example.api_reader_app.R
 import com.example.api_reader_app.databinding.FragmentDetailsBinding
 import com.example.api_reader_app.viewmodels.DetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import com.example.api_reader_app.fragments.DetailsFragmentArgs as DetailsFragmentArgs1
 
-class DetailsFragment : Fragment() {
+class DetailsFragment(
+    private val position: Int
+) : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-
-    private val args: DetailsFragmentArgs1 by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +33,7 @@ class DetailsFragment : Fragment() {
             false
         )
 
-        val viewModel: DetailsViewModel by viewModel{ parametersOf(args.id.toLong())}
+        val viewModel: DetailsViewModel by viewModel{ parametersOf(position.toLong()) }
 
         binding.detailsViewModel = viewModel
 
