@@ -1,4 +1,4 @@
-package com.example.api_reader_app.viewmodels
+package com.example.api_reader_app.viewModels
 
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat

@@ -4,8 +4,8 @@ import android.app.Application
 import com.example.api_reader_app.database.ForecastDao
 import com.example.api_reader_app.database.ForecastDatabase
 import com.example.api_reader_app.repositories.ForecastRepositoryImpl
-import com.example.api_reader_app.viewmodels.DetailsViewModel
-import com.example.api_reader_app.viewmodels.ListViewModel
+import com.example.api_reader_app.viewModels.DetailsViewModel
+import com.example.api_reader_app.viewModels.ListViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

@@ -1,11 +1,10 @@
-package com.example.api_reader_app.viewmodels
+package com.example.api_reader_app.viewModels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.api_reader_app.database.DailyForecast
-import com.example.api_reader_app.database.ForecastDao
 import com.example.api_reader_app.repositories.ForecastRepositoryImpl
 import kotlinx.coroutines.*
 

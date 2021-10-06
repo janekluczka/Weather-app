@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.api_reader_app.R
 import com.example.api_reader_app.databinding.FragmentListBinding
-import com.example.api_reader_app.viewmodels.ListViewModel
+import com.example.api_reader_app.viewModels.ListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {

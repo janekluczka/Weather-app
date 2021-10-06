@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.api_reader_app.R
 import com.example.api_reader_app.databinding.FragmentDetailsBinding
-import com.example.api_reader_app.viewmodels.DetailsViewModel
+import com.example.api_reader_app.viewModels.DetailsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

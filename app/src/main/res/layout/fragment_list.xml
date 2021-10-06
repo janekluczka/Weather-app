@@ -7,7 +7,7 @@
     <data>
         <variable
             name="listViewModel"
-            type="com.example.api_reader_app.viewmodels.ListViewModel" />
+            type="com.example.api_reader_app.viewModels.ListViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
